@@ -20,7 +20,7 @@ const fetchBooks = async (req,res) => {
         })
     
 }
-
+//kjsfksejfkejfkef
 // const addBook = async(req,res) => {
 //         const book = new Book(req.body)
 
@@ -48,25 +48,6 @@ const addBook = async (req, res) => {
       const author = await Author.findOne({ _id: req.params.author });
       const category = await Category.findOne({ _id: req.params.category });
 
-
-      // const NomCatById = (req, res) => {
-      //   Category.findOne({ _id: req.params.id })
-      //     .then((category) => {
-      //       if (!category) {
-      //         res.status(404).json({
-      //           message: "Catégorie non trouvée",
-      //         });
-      //         return;
-      //       }
-      
-      //       res.status(200).json({
-      //         title: category.title, // Renvoie le titre de la catégorie
-      //       });
-      //     })
-      //     .catch((error) => {
-      //       res.status(500).json({ error: error.message });
-      //     });
-      // };
 
        //knraja3ha dima yodhhorli auteur non trouvé w hatta kano shih l _id de l'auteur
       if (!author) {
