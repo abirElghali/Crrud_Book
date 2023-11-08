@@ -73,6 +73,8 @@ const  updateCat =(req,res) => {
 
 const fetchCats =(req,res) => {
     Category.find()
+    .populate("book")
+    .exec()
     .then((categorys) => {
         res.status(200).json({
             model: categorys,

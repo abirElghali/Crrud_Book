@@ -20,7 +20,6 @@ const fetchBooks = async (req,res) => {
         })
     
 }
-//kjsfksejfkejfkef
 // const addBook = async(req,res) => {
 //         const book = new Book(req.body)
 
@@ -81,8 +80,9 @@ const addBook = async (req, res) => {
     }
   }
   
-const getBookById =(req,res) => {
-         Book.findOne({_id: req.params.id})
+const getBookById = async(req,res) => {
+      try {
+        await Book.findOne({_id: req.params.id})
         .populate("author")
         .populate("category")
         .exec()
@@ -98,6 +98,11 @@ const getBookById =(req,res) => {
                 message: "objet trouvé",
             })
         })
+      }
+      catch (error) 
+    {
+      return res.status(400).json({ error: error.message });
+    }       
 }
 const  updateBook =(req,res) => {
         // console.log(req.body)
