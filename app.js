@@ -1,15 +1,12 @@
-
 const express = require("express")
-
 const mongoose = require("mongoose")
-
-const Book = require("./models/book")
+const app = express()
 const Author = require("./models/author")
 
-const app = express()
 const booksRoutes = require("./routes/book")
 const authorsRoutes= require("./routes/author")
 const categoryRoutes= require("./routes/category")
+const userRoutes = require("./routes/user")
 
 mongoose.connect(
     "mongodb://127.0.0.1:27017/Database",
@@ -37,8 +34,11 @@ app.use((req, res , next) => {
 
 app.use(express.json())
 
+
+
 app.use("/api/books", booksRoutes)
 app.use("/api/author", authorsRoutes)
 app.use("/api/category", categoryRoutes)
+app.use("/api/auth", userRoutes)
 
 module.exports = app

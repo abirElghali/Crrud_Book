@@ -7,6 +7,10 @@ const bookSchema = mongoose.Schema({
     price: {type: String, required: true},
     author: { type: Schema.Types.ObjectId, ref: 'Author'},
     category: [{ type: Schema.Types.ObjectId, ref: 'Category'}]
-})
+});
+
+bookSchema.statics.findByAuthor = async function (authorId) {
+    return this.find({ author: authorId });
+  };
 
 module.exports = mongoose.model("Book", bookSchema)
