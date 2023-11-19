@@ -1,46 +1,77 @@
 const Author = require("../models/author")
 
-const fetchAuthors =(req,res) => {
-    Author.find()
-        .then((authors) => {
+const fetchAuthors = async (req,res) => {
+    try 
+    {
+            const author= await Author.find()
+            //console.log(Author.fullName)
+            if (! author){
+                res.status(400).json({
+                    error: error.message,
+                    message: "probléme d'extraction",
+                })
+            }
             res.status(200).json({
-                model: authors,
+                model: author,
                 message: "success",
             })
-        })
-        .catch((error) => {
-            res.status(400).json({
-                error: error.message,
-                message: "probléme d'extraction",
-            })
-        })
+    }
+    catch(error) {res.status(400).json({error: error.message})}
 }
 
 const addAuthors = async (req,res) => {
-        //console.log(req.body)
-        const author = new Author(req.body)
-        await author.save().then(() => 
+    try  {
+         //console.log(req.body)
+        const author = new Personne({
+        lastName:req.body.lastName,
+        firstName:req.body.firstName,
+        nationality:req.body.nationality,
+        personne :{
+            nom: req.body.firstName,
+            type: "Auteur"
+        }})
+        await author.save()
+        if (!author) 
+        {
+            res.status(400).json({
+                error: error.message,
+                message: "probléme d'ajout",
+            })
+        }
         res.status(201).json({
             model: author,
             message: "objet crée!"
         })
-        )
+        
+        
         // res.send(req.body)
+    }
+    catch(error) {res.status(400).json({error: error.message})}
+
 }
 
+
+//sta3mltt l virtuall linnaa
 const getAuthorById =(req,res) => {
     Author.findOne({_id: req.params.id})
         .then((author) => {
             if(!author){
                 res.status(404).json({
-                    message: "objet non trouvé",
+                    message: "objet non trouvé"
                 })
                 return
             }
+
+            //radditto MAJ
+            const f1 = author.fullName.toUpperCase();
+            const f2 = f1.trim();
+
             res.status(200).json({
                 model: author,
                 message: "objet trouvé",
+                f1,f2
             })
+            //res.status(200).json({f1})
         })
 }
 const  updateAuthor =(req,res) => {

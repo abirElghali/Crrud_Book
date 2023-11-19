@@ -2,23 +2,25 @@ const Book = require("../models/book")
 const Author = require("../models/author")
 const  Category = require ("../models/category")
 
-const fetchBooks = async (req,res) => {
-        await Book.find()
-        .populate("author","category")
-        .exec()
-        .then((books) => {
-            res.status(200).json({
-                model: books,
-                message: "success",
-            })
-        })
-        .catch((error) => {
-            res.status(400).json({
-                error: error.message,
-                message: "probléme d'extraction",
-            })
-        })
-    
+
+const fetchBooks = async  (req, res) => {
+  try  {
+   const task = await Book.find()
+   .populate("author")
+    .exec()
+    if (!task){
+      res.status(404).json({
+          message: "vide ",
+      });
+      return;
+    }
+    res.status(201).json({
+      model:task,
+      message: "affichage avec succées"
+    })
+
+  }
+  catch(error) {res.status(400).json({error: error.message})}
 }
 // const addBook = async(req,res) => {
 //         const book = new Book(req.body)
@@ -82,11 +84,10 @@ const addBook = async (req, res) => {
   
 const getBookById = async(req,res) => {
       try {
-        await Book.findOne({_id: req.params.id})
+        const book = await Book.findOne({_id: req.params.id})
         .populate("author")
         .populate("category")
         .exec()
-        .then((book) => {
             if(!book){
                 res.status(404).json({
                     message: "objet non trouvé",
@@ -97,15 +98,17 @@ const getBookById = async(req,res) => {
                 model: book,
                 message: "objet trouvé",
             })
-        })
+        
       }
       catch (error) 
     {
       return res.status(400).json({ error: error.message });
     }
-    //djhdhbqjsdhsqjd       
-}
-const  updateBook =(req,res) => {
+  }
+
+
+
+  const  updateBook =(req,res) => {
         // console.log(req.body)
         // res.send(req.params.id)
         Book.findByIdAndUpdate({_id: req.params.id},

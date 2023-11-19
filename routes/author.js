@@ -12,7 +12,7 @@ router.delete(":id", authorController.deleteAuthor)
 router.get("/", authorController.fetchAuthors)
 
 //affiche un Book selon id en paramétre
-router.get(":id", authorController.getAuthorById)
+router.get("/:id", authorController.getAuthorById)
 
 //création d'un objet Book
 router.post("/", authorController.addAuthors)

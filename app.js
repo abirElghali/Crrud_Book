@@ -1,12 +1,13 @@
-
 const express = require("express")
 
 const mongoose = require("mongoose")
 
-const Book = require("./models/book")
+const app = express()
+
 const Author = require("./models/author")
 
-const app = express()
+//const ani = require("./models/animal");
+
 const booksRoutes = require("./routes/book")
 const authorsRoutes= require("./routes/author")
 const categoryRoutes= require("./routes/category")
@@ -35,7 +36,11 @@ app.use((req, res , next) => {
     next()
 })
 
+
+
 app.use(express.json())
+
+
 
 app.use("/api/books", booksRoutes)
 app.use("/api/author", authorsRoutes)
