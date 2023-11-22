@@ -22,65 +22,90 @@ const fetchBooks = async  (req, res) => {
   }
   catch(error) {res.status(400).json({error: error.message})}
 }
-// const addBook = async(req,res) => {
-//         const book = new Book(req.body)
 
-//         const author = await Author.findOne({_id: req.params.author})
-//             if(!author){
-//                 res.status(404).json({
-//                     message: "auteur non trouvé",
-//                 })
-//                 return
-//             }
-//         await book.save().then(() => 
-//                 res.status(201).json({
-//                     model: book,
-//                     message: "objet crée avec succés !"
-//                 })
-//                 )
-//         // const category = Category.findOne({_id: req.params.category})
-//         // console.log(author, category)
-//         .catch((error) => res.status(400).json({error: error.message})) 
+//la premiere addBook
+const addBook = async(req,res) => {
+        const book = new Book(req.body)
 
-// }
+        const author = await Author.findOne({_id: req.params.author})
+            if(!author){
+                res.status(404).json({
+                    message: "auteur non trouvé",
+                })
+                return
+            }
+        await book.save().then(() => 
+                res.status(201).json({
+                    model: book,
+                    message: "objet crée avec succés !"
+                })
+                )
+        // const category = Category.findOne({_id: req.params.category})
+        // console.log(author, category)
+        .catch((error) => res.status(400).json({error: error.message})) 
 
-const addBook = async (req, res) => {
+}
+
+// const addBook = async (req, res) => {
+
+//     try {
+//       const author = await Author.findOne({ _id: req.params.author });
+//       const category = await Category.findOne({ _id: req.params.category });
+
+
+//        //knraja3ha dima yodhhorli auteur non trouvé w hatta kano shih l _id de l'auteur
+//       if (!author) {
+//           return res.status(404).json({
+//             message: "Auteur non trouvé",
+//           }); 
+//       }
+//       if (!category) {
+//                 return res.status(404).json({
+//                   message: "category non trouvé",
+//                 }); 
+//       }
+//                 const book = new Book(req.body);
+//                 await book.save();
+          
+//                 //m yhbch yaaml exécution l hadhuma zoz
+//                   // category.books.push(book._id);
+//                   // await category.save();
+          
+//                 return res.status(201).json({
+//                   model: book,
+//                   message: "Livre créé avec succès !"
+//                 });
+              
+//     } 
+//     catch (error) 
+//     {
+//       return res.status(400).json({ error: error.message });
+//     }
+//   }
+
+
+  const addBook2 = async (req, res) => {
     try {
+
       const author = await Author.findOne({ _id: req.params.author });
       const category = await Category.findOne({ _id: req.params.category });
-
-
-       //knraja3ha dima yodhhorli auteur non trouvé w hatta kano shih l _id de l'auteur
-      if (!author) {
+  
+      if (author === null || category === null) {
         return res.status(404).json({
-          message: "Auteur non trouvé",
-        }); 
+          message: "Auteur/catégorie non trouvé",
+        });
       }
-
-        if (!category) {
-                return res.status(404).json({
-                  message: "category non trouvé",
-                }); 
-              }
-              
-                const book = new Book(req.body);
-                await book.save();
-          
-                //m yhbch yaaml exécution l hadhuma zoz
-                  // category.books.push(book._id);
-                  // await category.save();
-          
-                return res.status(201).json({
-                  model: book,
-                  message: "Livre créé avec succès !"
-                });
-              
-    } 
-    catch (error) 
-    {
+  
+      const book = new Book(req.body);
+      await book.save();
+      return res.status(201).json({
+        model: book,
+        message: "Livre créé avec succès !",
+      });
+    } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  }
+  };
   
 const getBookById = async(req,res) => {
       try {
@@ -138,8 +163,9 @@ const deleteBook =(req,res) => {
 
 module.exports = {
     fetchBooks: fetchBooks,
-    addBook: addBook,
+    // addBook: addBook,
     getBookById: getBookById,
     deleteBook: deleteBook,
-    updateBook: updateBook
+    updateBook: updateBook,
+    addBook2:addBook2
 }

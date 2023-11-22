@@ -22,14 +22,13 @@ const fetchAuthors = async (req,res) => {
 const addAuthors = async (req,res) => {
     try  {
          //console.log(req.body)
-        const author = new Personne({
+        const author = new Author({
         lastName:req.body.lastName,
         firstName:req.body.firstName,
-        nationality:req.body.nationality,
-        personne :{
-            nom: req.body.firstName,
-            type: "Auteur"
-        }})
+        email: req.body.email,
+        password: req.body.password,
+        nationality:req.body.nationality
+        })
         await author.save()
         if (!author) 
         {

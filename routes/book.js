@@ -16,7 +16,31 @@ router.get("/", bookController.fetchBooks)
 router.get("/:id", bookController.getBookById)
 
 //création d'un objet Book
-router.post("/", bookController.addBook)
+//router.post("/", bookController.addBook)
+
+//router.post("/", bookController.addBook2)
+
+router.post('/', async (req, res) => {
+  try {
+    // Validation du livre avec mongoose
+    const newBook = new Book(req.body);
+    await newBook.validate();
+
+    // Vérification si l'auteur a écrit d'autres livres
+    const authorId = req.body.author;
+    const authorBooksCount = await Book.countDocuments({ author: authorId });
+
+    if (authorBooksCount > 0) {
+      await newBook.save();
+      res.status(201).json(newBook);
+    } else {
+      res.status(400).json({ message: 'L\'auteur doit avoir écrit d\'autres livres avant.' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 
 //permet d afficher tous les book de meme author avec le param id
 router.get('/author/:id', async (req, res) => {
