@@ -26,7 +26,6 @@ const fetchBooks = async  (req, res) => {
 //la premiere addBook
 const addBook = async(req,res) => {
         const book = new Book(req.body)
-
         const author = await Author.findOne({_id: req.params.author})
             if(!author){
                 res.status(404).json({
@@ -87,15 +86,14 @@ const addBook = async(req,res) => {
   const addBook2 = async (req, res) => {
     try {
 
-      const author = await Author.findOne({ _id: req.params.author });
-      const category = await Category.findOne({ _id: req.params.category });
-  
-      if (author === null || category === null) {
-        return res.status(404).json({
-          message: "Auteur/catégorie non trouvé",
-        });
-      }
-  
+      // const author = await Author.findOne({ _id: req.params.author });
+      // const category = await Category.findOne({ _id: req.params.category });
+      // if (author === null || category === null) 
+      // {
+      //   return res.status(404).json({
+      //     message: "Auteur/catégorie non trouvé",
+      //   });
+      // }
       const book = new Book(req.body);
       await book.save();
       return res.status(201).json({
