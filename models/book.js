@@ -12,7 +12,6 @@ const bookSchema = mongoose.Schema({
 
 bookSchema.plugin(idValidator);
 
-
 bookSchema.statics.findByAuthor = async function (authorId) {
     return this.find({ author: authorId });
   };

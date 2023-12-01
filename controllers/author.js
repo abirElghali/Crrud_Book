@@ -1,5 +1,6 @@
 const Author = require("../models/author")
-
+//.............
+ggvhghj
 const fetchAuthors = async (req,res) => {
     try 
     {
@@ -25,8 +26,8 @@ const addAuthors = async (req,res) => {
         const author = new Author({
         lastName:req.body.lastName,
         firstName:req.body.firstName,
-        email: req.body.email,
-        password: req.body.password,
+        // email: req.body.email,
+        // password: req.body.password,
         nationality:req.body.nationality
         })
         await author.save()
